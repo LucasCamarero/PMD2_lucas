@@ -13,13 +13,9 @@ enum class RadioAnimal {
     GALLINA,
     OVEJA
 }
-/*
-//TODO datas class de ejempplo
-data class Animal(
-    var nombre: String
-)*/
 
 class GranjaViewModel : ViewModel() {
+
     fun String.obtenerValor():Int {
         MyLog.d("String.obtenerValor: ${this}")
         try {
@@ -30,7 +26,10 @@ class GranjaViewModel : ViewModel() {
         return -1
     }
     fun limpiar() {
-        //TODO reseteo de funciones
+        nombre = ""
+        inversionStr = ""
+        retornoStr = ""
+        errorMensaje = null
     }
     val listaAnimales = mutableStateListOf<Animal>()
 
@@ -58,8 +57,6 @@ class GranjaViewModel : ViewModel() {
         if (errorMensaje != null) errorMensaje = null // Limpiar error al escribir
     }
 
-
-
     private val _radioAnimal = mutableStateOf(RadioAnimal.VACA)
     val radioAnimal: State<RadioAnimal> = _radioAnimal
 
@@ -69,12 +66,64 @@ class GranjaViewModel : ViewModel() {
     }
 
     fun pruebas() {
-        //TODO Datos de pruebas
+        val animalesPrueba = listOf<Animal>(
+            Vaca("Pepa",15000, 20000, true),
+            Gallina("Marisa",80, 40, true),
+            Oveja("Juliana",400, 700, true)
+        )
+
+        animalesPrueba.forEach {
+            listaAnimales.add(it)
+        }
     }
 
     fun crearAnimal(onSuccess: () -> Unit) {
-        MyLog.d("El animal seleccionado ha sido ${radioAnimal.value}")
-        //TODO
+        // Variables auxiliares para convertir los valores numéricos
+        var inInversion = 0
+        var inRetorno = 0
+
+        // Validación de la inversión
+        try {
+            inInversion = inversionStr.toInt()
+        } catch (e : Exception) {
+            errorMensaje = "La inversión no es un número cómo se espera"
+            return
+        }
+
+        // Validación del retorno
+        try {
+            inRetorno = retornoStr.toInt()
+        } catch (e : Exception) {
+            errorMensaje = "El retorno no es un número cómo se espera"
+            return
+        }
+
+        if(_radioAnimal.value == RadioAnimal.VACA) {
+            // Se crea una instancia de Libro con los datos introducidos
+            var animal:Animal = Vaca(nombre, inInversion, inRetorno, true)
+
+            // Se añade el libro a la lista observable
+            listaAnimales.add(animal)
+        }
+
+        if(_radioAnimal.value == RadioAnimal.GALLINA) {
+            // Se crea una instancia de Libro con los datos introducidos
+            var animal:Animal = Gallina(nombre, inInversion, inRetorno, true)
+
+            // Se añade el libro a la lista observable
+            listaAnimales.add(animal)
+        }
+
+        if(_radioAnimal.value == RadioAnimal.OVEJA) {
+            // Se crea una instancia de Libro con los datos introducidos
+            var animal:Animal = Oveja(nombre, inInversion, inRetorno, true)
+
+            // Se añade el libro a la lista observable
+            listaAnimales.add(animal)
+        }
+
+        // Callback para notificar éxito (por ejemplo, cerrar pantalla)
+        onSuccess()
     }
 }
 
