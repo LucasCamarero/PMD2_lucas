@@ -8,6 +8,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +19,7 @@ import com.lucascamarero.pmd2_lucas.components.DefaultOutlinedTextField
 import com.lucascamarero.pmd2_lucas.MyLog
 import com.lucascamarero.pmd2_lucas.logica.GranjaViewModel
 import com.lucascamarero.pmd2_lucas.logica.RadioAnimal
+import kotlinx.coroutines.launch
 
 @Composable
 fun GranjaForm(
@@ -25,13 +27,28 @@ fun GranjaForm(
     modifier: Modifier,
     viewModel: GranjaViewModel
 ) {
+    val uiScope = rememberCoroutineScope()
+
     DefaultColumn(modifier = modifier) {
+        Text("AnimalForm: ")
+
         DefaultOutlinedTextField(
             texto = viewModel.nombre,
             onTextoChange = { nuevoTexto -> viewModel.onNombreChanged(nuevoTexto) },
             placeholder = "Nombre"
         )
-        //TODO crea el resto de textFields
+
+        DefaultOutlinedTextField(
+            texto = viewModel.inversionStr,
+            onTextoChange = { nuevoTexto -> viewModel.onInversionChanged(nuevoTexto) },
+            placeholder = "Inversion"
+        )
+
+        DefaultOutlinedTextField(
+            texto = viewModel.retornoStr,
+            onTextoChange = { nuevoTexto -> viewModel.onRetornoStrChanged(nuevoTexto) },
+            placeholder = "Retorno"
+        )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             val animal by viewModel.radioAnimal
@@ -69,20 +86,19 @@ fun GranjaForm(
         } // fin row RadioButton
 
         Row() {
-            Button({
-                viewModel.crearAnimal() {
-                    //TODO ve atras o ventanaVer
-                }
 
-            }) {
-                Text("Aceptar")
-            }
+            Button(onClick = {
+                uiScope.launch {
+                    viewModel.crearAnimal() {navController.popBackStack()}
+                }
+            }) { Text("Aceptar") }
+
             Button({
-                //TODO navega a ventana Ver
+                navController.navigate("VentanaVer")
             }) {
                 Text("volver")
             }
         }
-        //TODO Muestra el error en pantalla o Toast, como quieras
-    } // fin collumn
+        viewModel.errorMensaje?.let { Text(it,color = Color.Red) }
+    }
 }
