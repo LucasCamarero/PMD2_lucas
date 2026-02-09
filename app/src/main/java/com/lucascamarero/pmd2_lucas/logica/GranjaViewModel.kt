@@ -25,12 +25,14 @@ class GranjaViewModel : ViewModel() {
         }
         return -1
     }
+
     fun limpiar() {
         nombre = ""
         inversionStr = ""
         retornoStr = ""
         errorMensaje = null
     }
+
     val listaAnimales = mutableStateListOf<Animal>()
 
     var errorMensaje by mutableStateOf<String?>(null)

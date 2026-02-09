@@ -90,10 +90,12 @@ fun GranjaForm(
             Button(onClick = {
                 uiScope.launch {
                     viewModel.crearAnimal() {navController.popBackStack()}
+                    viewModel.limpiar()
                 }
             }) { Text("Aceptar") }
 
             Button({
+                viewModel.limpiar()
                 navController.navigate("VentanaVer")
             }) {
                 Text("volver")
