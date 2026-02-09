@@ -89,6 +89,5 @@ fun Boolean.aTexto():String {
 // Función de extensión de String
 // Devuelve un mensaje de confirmación
 fun String.Confirmación():String {
-    String resultado = "¿Estás seguro de esto?: "
-    return resultado += this
+    return "¿Estás seguro de esto?: " += this
 }
