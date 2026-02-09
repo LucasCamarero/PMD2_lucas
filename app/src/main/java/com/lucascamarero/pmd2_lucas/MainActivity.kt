@@ -10,8 +10,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.lucascamarero.pmd2_lucas.logica.GranjaViewModel
 import com.lucascamarero.pmd2_lucas.ui.theme.PMD2_lucasTheme
+import com.lucascamarero.pmd2_lucas.ventanas.GranjaForm
+import com.lucascamarero.pmd2_lucas.ventanas.VentanaVer
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,28 +28,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             PMD2_lucasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    gestorVentanas(Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
+// Gestiona la navegación de la app
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun gestorVentanas(modifier: Modifier) {
+    val context = LocalContext.current
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PMD2_lucasTheme {
-        Greeting("Android")
+    val granjaViewModel: GranjaViewModel = viewModel()
+
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = "VentanaVer"
+    ) {
+        composable("GranjaForm")  { GranjaForm(navController, modifier, granjaViewModel) }
+        composable("VentanaVer") { VentanaVer(navController, modifier, granjaViewModel) }
     }
 }
