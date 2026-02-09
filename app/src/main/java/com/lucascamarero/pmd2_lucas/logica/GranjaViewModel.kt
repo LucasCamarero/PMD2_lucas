@@ -13,12 +13,11 @@ enum class RadioAnimal {
     GALLINA,
     OVEJA
 }
-
+/*
 //TODO datas class de ejempplo
 data class Animal(
-    val inversion: Int,
     var nombre: String
-)
+)*/
 
 class GranjaViewModel : ViewModel() {
     fun String.obtenerValor():Int {
@@ -86,8 +85,9 @@ fun Boolean.aTexto():String {
     else return "NO"
 }
 
+
 // Función de extensión de String
 // Devuelve un mensaje de confirmación
 fun String.Confirmación():String {
-    return "¿Estás seguro de esto?: " += this
+    return this + ": ¿Estás seguro de esto?"
 }
