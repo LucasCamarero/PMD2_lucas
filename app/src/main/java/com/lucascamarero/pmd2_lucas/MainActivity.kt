@@ -21,6 +21,7 @@ import com.lucascamarero.pmd2_lucas.ui.theme.PMD2_lucasTheme
 import com.lucascamarero.pmd2_lucas.ventanas.GranjaForm
 import com.lucascamarero.pmd2_lucas.ventanas.VentanaVer
 
+// la función de extensión opcional se encuentra al final de GranjaViewModel.kt
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -79,3 +79,16 @@ class GranjaViewModel : ViewModel() {
     }
 }
 
+// Función de extensión de Boolean
+// Devuelve "SI" si el valor es true y "NO" si es false
+fun Boolean.aTexto():String {
+    if(this) return "SI"
+    else return "NO"
+}
+
+// Función de extensión de String
+// Devuelve un mensaje de confirmación
+fun String.Confirmación():String {
+    String resultado = "¿Estás seguro de esto?: "
+    return resultado += this
+}
