@@ -140,3 +140,13 @@ fun Boolean.aTexto():String {
 fun String.Confirmación():String {
     return this + ": ¿Estás seguro de esto?"
 }
+
+// Función de extensión para List<Animal>
+// Devuelve el total de las inversiones
+fun List<Animal>.InversionTotal(): Int {
+    var total = 0
+    this.forEach {
+        total += it.inversion
+    }
+    return total
+}

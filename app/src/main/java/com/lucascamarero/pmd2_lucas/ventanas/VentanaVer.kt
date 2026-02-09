@@ -12,8 +12,13 @@ import androidx.compose.ui.unit.dp
 import com.lucascamarero.pmd2_lucas.logica.GranjaViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 import com.lucascamarero.pmd2_lucas.components.DefaultColumn
+import com.lucascamarero.pmd2_lucas.logica.InversionTotal
 
 @Composable
 fun VentanaVer(
@@ -23,10 +28,22 @@ fun VentanaVer(
 ) {
     val animales = viewModel.listaAnimales
 
-    DefaultColumn(modifier = modifier) {
-        //TODO Crea los botones
+    var inversionTotal by remember { mutableStateOf(0) }
 
-        // COLUMNA DE VISUALICACIÓN DE DATOS
+    DefaultColumn(modifier = modifier) {
+        Text("VentanaVer")
+
+        Button({
+            viewModel.pruebas()
+        }) { Text("Insertar datos de prueba") }
+
+        Button(onClick = {
+            navController.navigate("GranjaForm")
+        }) {
+            Text("Añadir animal")
+        }
+
+        // COLUMNA DE VISUALIZACIÓN DE DATOS
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp)
@@ -35,6 +52,11 @@ fun VentanaVer(
                 //TODO Asegurate que se visualizan los animales
                 Text(text = animal.toString(), modifier = Modifier.padding(4.dp))
                 Divider()
+            }
+
+            item {
+                inversionTotal = animales.InversionTotal()
+                Text("Inversión Total = $inversionTotal")
             }
         }
     }
