@@ -50,7 +50,7 @@ fun VentanaVer(
         ) {
             items(animales) { animal ->
                 //TODO Asegurate que se visualizan los animales
-                Text(text = animal.toString(), modifier = Modifier.padding(4.dp))
+                Text(text = animal.imprimir(), modifier = Modifier.padding(4.dp))
                 Divider()
             }
 
